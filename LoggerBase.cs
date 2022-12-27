@@ -21,4 +21,17 @@ namespace Serilog_Library
 
         public void CloseAndFlush() => Log.CloseAndFlush();
     }
+
+    public class Logger : LoggerBase
+    {
+        protected override LoggerConfiguration Get_LoggerConfiguration(LoggerConfiguration configuration)
+        {
+            return configuration
+                .MinimumLevel.Information()
+                .WriteTo.File("logs/log-.log", rollingInterval: RollingInterval.Day)
+                .WriteTo.Console(Serilog.Events.LogEventLevel.Information);
+        }
+
+        public Logger() : base() { }
+    }
 }
